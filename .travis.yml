@@ -6,7 +6,7 @@ before_install:
   - docker build -t kostovski989/fib-react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run CI=true kostovski989/fib-react-test nmp test
+  - docker run -e CI=true kostovski989/fib-react-test nmp test
 
 after_success:
   - docker build -t kostovski989/fib-client -f ./client
