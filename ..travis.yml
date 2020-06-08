@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker -build -t kostovski989/fib-react-test -f ./client/Dockerfile.dev
+
+script:
+  - docker run CI=true kostovski989/fib-react-test nmp test
+
+after_success:
+  - docker -build -t kostovski989/fib-client -f ./client
+  - docker -build -t kostovski989/fib-nginx -f ./nginx
+  - docker -build -t kostovski989/fib-server -f ./server
+  - docker -build -t kostovski989/fib-worker -f ./worker
+  - echo "$docker_password" | docker login -u $docker_user --password-stdin
+  - docker push kostovski989/fib-client
+  - docker push kostovski989/fib-nginx
+  - docker push kostovski989/fib-server
+  - docker push kostovski989/fib-worker
