@@ -9,10 +9,10 @@ script:
   - docker run -e CI=true kostovski989/fib-react-test nmp test
 
 after_success:
-  - docker build -t kostovski989/fib-client -f ./client
-  - docker build -t kostovski989/fib-nginx -f ./nginx
-  - docker build -t kostovski989/fib-server -f ./server
-  - docker build -t kostovski989/fib-worker -f ./worker
+  - docker build -t kostovski989/fib-client ./client
+  - docker build -t kostovski989/fib-nginx ./nginx 
+  - docker build -t kostovski989/fib-server ./server
+  - docker build -t kostovski989/fib-worker ./worker
   - echo "$docker_password" | docker login -u $docker_user --password-stdin
   - docker push kostovski989/fib-client
   - docker push kostovski989/fib-nginx
